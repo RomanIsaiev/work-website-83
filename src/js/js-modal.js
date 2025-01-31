@@ -1,29 +1,45 @@
 (() => {
   const refs = {
-    openModalBtn1: document.querySelectorAll("[data-modal-open-one]"),
-    // openModalBtn2: document.querySelectorAll("[data-modal-open-two]"),
-    closeModalBtn1: document.querySelector("[data-modal-close1]"),
-    // closeModalBtn2: document.querySelector("[data-modal-close2]"),
-    modal1: document.querySelector("[data-modal1]"),
-    // modal2: document.querySelector("[data-modal2]"),
+    openModalBtns: document.querySelectorAll('[data-modal-open]'),
+    closeModalBtns: document.querySelectorAll('[data-modal-close]'),
+    modals: document.querySelectorAll('[data-modal]'),
+    backdrops: document.querySelectorAll('.backdrop'),
   };
 
-  refs.openModalBtn1.forEach((item) =>
-    item.addEventListener("click", toggleModal1)
+  refs.openModalBtns.forEach(btn =>
+    btn.addEventListener('click', function () {
+      const modalId = btn.getAttribute('data-modal-open');
+      const modal = document.querySelector(`[data-modal="${modalId}"]`);
+      modal.classList.remove('is-hidden');
+      document.body.classList.add('modal-open');
+    })
   );
 
-  // refs.openModalBtn2.forEach((item) =>
-  //   item.addEventListener("click", toggleModal2)
-  // );
+  refs.closeModalBtns.forEach(btn =>
+    btn.addEventListener('click', function () {
+      const modal = btn.closest('[data-modal]');
+      modal.classList.add('is-hidden');
+      document.body.classList.remove('modal-open');
+    })
+  );
 
-  refs.closeModalBtn1.addEventListener("click", toggleModal1);
-  // refs.closeModalBtn2.addEventListener("click", toggleModal2);
+  refs.backdrops.forEach(backdrop =>
+    backdrop.addEventListener('click', function (event) {
+      if (event.currentTarget === event.target) {
+        backdrop.classList.add('is-hidden');
+        document.body.classList.remove('modal-open');
+      }
+    })
+  );
 
-  function toggleModal1() {
-    refs.modal1.classList.toggle("is-hidden");
+  if ('ontouchstart' in window) {
+    refs.openModalBtns.forEach(btn =>
+      btn.addEventListener('touchstart', function () {
+        const modalId = btn.getAttribute('data-modal-open');
+        const modal = document.querySelector(`[data-modal="${modalId}"]`);
+        modal.classList.remove('is-hidden');
+        document.body.classList.add('modal-open');
+      })
+    );
   }
-
-  // function toggleModal2() {
-  //   refs.modal2.classList.toggle("is-hidden");
-  // }
 })();
