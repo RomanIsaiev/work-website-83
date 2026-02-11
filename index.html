@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -38,7 +38,7 @@
         window,
         document,
         "script",
-        "https://connect.facebook.net/en_US/fbevents.js"
+        "https://connect.facebook.net/en_US/fbevents.js",
       );
       fbq("init", "1266338937680059");
       fbq("track", "PageView");
@@ -84,7 +84,7 @@
                 width="68"
                 height="68"
             /></picture>
-            <p class="sale-number">-94%</p>
+            <p class="sale-number">-80%</p>
           </div>
         </div>
         <ul class="header-course-list list">
@@ -634,11 +634,36 @@
                     <p class="point-text">Текстові матеріали</p>
                   </li>
                 </ul>
-                <p class="price">699 грн</p>
-                <button type="button" class="buy-btn" data-modal-open="modal1">
-                  Купити
-                </button>
+                <p class="price">
+                  <span class="old-price">3500 грн</span>
+                  <span class="new-price">699 грн</span>
+                </p>
+                <div class="header-button-container" data-modal-open="modal1">
+                  <p class="header-button link">Купити</p>
+                  <div class="header-sale-mark">
+                    <picture
+                      ><source
+                        srcset="
+                          ./src/images/header-mark-1x.png 1x,
+                          ./src/images/header-mark-2x.png 2x
+                        "
+                        media="(min-width: 320px)"
+                        width="68"
+                        height="68" />
+                      <img
+                        class="sale-mark"
+                        src="./src/images/header-mark-1x.png"
+                        alt="sale"
+                        width="68"
+                        height="68"
+                    /></picture>
+                    <p class="sale-number">-80%</p>
+                  </div>
+                </div>
               </li>
+              <!-- <button type="button" class="buy-btn" data-modal-open="modal1">
+                  Купити
+                </button> -->
               <!-- <li class="tariff-item">
                 <h3 class="tariff-name">Стандартний</h3>
                 <ul class="tariff-points-list">
