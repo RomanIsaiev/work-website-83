@@ -946,6 +946,7 @@ p {
   font-size: 30px;
   font-style: normal;
   font-weight: 800;
+
   line-height: 115%; /* 34.5px */
 
   text-decoration: line-through;
