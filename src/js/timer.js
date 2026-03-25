@@ -1,98 +1,44 @@
-// timer-one
+function getEndOfDay() {
+  const now = new Date();
+  const endOfDay = new Date(now);
+  endOfDay.setHours(24, 0, 0, 0);
+  return endOfDay;
+}
 
 function getTimeRemaining(endtime) {
-  var t = Date.parse(endtime) - Date.parse(new Date());
-  // var days = Math.floor(t / (1000 * 60 * 60 * 24));
-  var seconds = Math.floor((t / 1000) % 60);
-  var minutes = Math.floor((t / 1000 / 60) % 60);
-  var hours = Math.floor((t / (1000 * 60 * 60)) % 24);
+  const t = endtime - new Date();
+  const seconds = Math.floor((t / 1000) % 60);
+  const minutes = Math.floor((t / 1000 / 60) % 60);
+  const hours = Math.floor(t / (1000 * 60 * 60));
+
   return {
     total: t,
-    // days: days,
     hours: hours,
     minutes: minutes,
     seconds: seconds,
   };
 }
 
-function initializeClock(id, endtime) {
-  var clock = document.getElementById(id);
-  // var daysSpan = clock.querySelector(".days");
-  var hoursSpan = clock.querySelector(".hours");
-  var minutesSpan = clock.querySelector(".minutes");
-  var secondsSpan = clock.querySelector(".seconds");
+function startDailyTimer(id, hoursClass, minutesClass, secondsClass) {
+  const clock = document.getElementById(id);
+  if (!clock) return;
+
+  const hoursSpan = clock.querySelector(hoursClass);
+  const minutesSpan = clock.querySelector(minutesClass);
+  const secondsSpan = clock.querySelector(secondsClass);
 
   function updateClock() {
-    var t = getTimeRemaining(endtime);
-    // daysSpan.innerHTML = ("0" + t.days).slice(-2);
-    hoursSpan.innerHTML = ("0" + t.hours).slice(-2);
-    minutesSpan.innerHTML = ("0" + t.minutes).slice(-2);
-    secondsSpan.innerHTML = ("0" + t.seconds).slice(-2);
+    const endtime = getEndOfDay();
+    const t = getTimeRemaining(endtime);
 
-    if (t.total <= 0) {
-      clearInterval(timeinterval);
-      var deadline = new Date(Date.parse(endtime) + 24 * 60 * 60 * 1000);
-      initializeClock("countdown", deadline);
-    }
+    if (hoursSpan) hoursSpan.innerHTML = String(t.hours).padStart(2, "0");
+    if (minutesSpan) minutesSpan.innerHTML = String(t.minutes).padStart(2, "0");
+    if (secondsSpan) secondsSpan.innerHTML = String(t.seconds).padStart(2, "0");
   }
 
   updateClock();
-  var timeinterval = setInterval(updateClock, 1000);
+  setInterval(updateClock, 1000);
 }
 
-function initializeClockTwo(id, endtime) {
-  var clock = document.getElementById(id);
-  // var daysSpan = clock.querySelector(".days-two");
-  var hoursSpan = clock.querySelector(".hours-two");
-  var minutesSpan = clock.querySelector(".minutes-two");
-  var secondsSpan = clock.querySelector(".seconds-two");
-
-  function updateClock() {
-    var t = getTimeRemaining(endtime);
-    // daysSpan.innerHTML = ("0" + t.days).slice(-2);
-    hoursSpan.innerHTML = ("0" + t.hours).slice(-2);
-    minutesSpan.innerHTML = ("0" + t.minutes).slice(-2);
-    secondsSpan.innerHTML = ("0" + t.seconds).slice(-2);
-
-    if (t.total <= 0) {
-      clearInterval(timeinterval);
-      var deadline = new Date(Date.parse(endtime) + 24 * 60 * 60 * 1000);
-      initializeClockTwo("countdown-two", deadline);
-    }
-  }
-
-  updateClock();
-  var timeinterval = setInterval(updateClock, 1000);
-}
-
-// function initializeClockThree(id, endtime) {
-//   var clock = document.getElementById(id);
-//   // var daysSpan = clock.querySelector(".days-three");
-//   var hoursSpan = clock.querySelector(".hours-three");
-//   var minutesSpan = clock.querySelector(".minutes-three");
-//   var secondsSpan = clock.querySelector(".seconds-three");
-
-//   function updateClock() {
-//     var t = getTimeRemaining(endtime);
-//     daysSpan.innerHTML = ("0" + t.days).slice(-2);
-//     hoursSpan.innerHTML = ("0" + t.hours).slice(-2);
-//     minutesSpan.innerHTML = ("0" + t.minutes).slice(-2);
-//     secondsSpan.innerHTML = ("0" + t.seconds).slice(-2);
-
-//     if (t.total <= 0) {
-//       clearInterval(timeinterval);
-//       var deadline = new Date(Date.parse(endtime) + 24 * 60 * 60 * 1000);
-//       initializeClockThree("countdown-three", deadline);
-//     }
-//   }
-
-//   updateClock();
-//   var timeinterval = setInterval(updateClock, 1000);
-// }
-
-var deadline = "February 02 2026 00:00:00 GMT+0200";
-initializeClock("countdown", deadline);
-initializeClockTwo("countdown-two", deadline);
-// initializeClockThree("countdown-three", deadline);
-
-// timer - two;
+startDailyTimer("countdown", ".hours", ".minutes", ".seconds");
+startDailyTimer("countdown-two", ".hours-two", ".minutes-two", ".seconds-two");
